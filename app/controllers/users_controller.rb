@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
     get "/signup" do
-        if is_logged_in?
+        if Helpers.is_logged_in?(session)
             redirect to "/tweets"
         end
         #binding.pry
@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     end
 
     get "/login" do
-        if !is_logged_in?
+        if !Helpers.is_logged_in?(session)
             erb :"users/login"
         else
             redirect to "/tweets"
