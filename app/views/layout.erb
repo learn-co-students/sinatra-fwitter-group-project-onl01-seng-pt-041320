@@ -7,10 +7,18 @@
 
     <div class="container">
       <h1>Welcome to Fwitter!</h1>
+
+      <a href="/tweets">View All Tweets</a>
+      <br><br>
+
+
       <a button id="loginButton" type="button" href='/login'>Login</a>
+      <br>
       <a button id="signupButton" type="button" href='/signup'>Sign Up</a>
 
     </div>
+
+    <%= yield %>
 
   </body>
 </html>
