@@ -13,8 +13,12 @@ class UsersController < ApplicationController
             username: params[:username],
             email: params[:email],
             password: params[:password])
-        @user.save
-        redirect '/tweets/#{@user.id}'
+        if @user.save
+            session[:id] = @user.id
+            redirect to '/tweets'
+        else 
+            rediret to '/signup'
+        end
     end
 
     get '/login' do
@@ -23,6 +27,25 @@ class UsersController < ApplicationController
         else
           erb :"/users/login"
         end
-      end
+    end
+
+    post '/login' do 
+        @user = User.find_by(username: params[:username])
+        if @user && @user.authenticate(params[:password])
+            session[:id] = @user.id
+            redirect to '/tweets'
+        else
+            erb :'users/login', locals: {message: "Incorrect Login info."}
+        end
+    end
+
+    get '/logout' do 
+        if logged_in?
+            session.clear
+            redirect to '/login'
+        else
+            redirect to '/'
+        end
+    end
 
 end
